@@ -22,6 +22,7 @@ class ProductList extends React.Component {
         this.setState({
             category: event.target.value
         });
+        
     }
     render() {
         const products = this.state.products.map((product, index) => <div key={index}>{product.productName}</div>)

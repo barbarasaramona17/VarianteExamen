@@ -32,12 +32,12 @@ class RobotList extends Component {
 			})			
 		})
 	}
+	
   render() {
+  	const robots = this.state.robots.map((robot, index) => <Robot key={index} item={robot} onDelete={this.deleteRobot} />)
     return (
       <div>
-      	{
-      		
-      	}
+      	{robots}
       </div>
     )
   }

@@ -3,17 +3,15 @@ import RobotStore from '../stores/RobotStore'
 import Robot from './Robot'
 import RobotForm from './RobotForm'
 
-// TODO : adăugați o componentă RobotForm 
-// RobotForm ar să permită adăugarea unui robot
-
-// TODO : add a RobotForm component 
-// RobotForm should be able to add a robot
-
 class RobotList extends Component {
+	// add a form to allow adding robots
 	constructor(){
 		super()
 		this.state = {
 			robots : []
+		}
+		this.addRobot = (robot) => {
+			this.store.addRobot(robot)
 		}
 	}
 	componentDidMount(){
@@ -36,6 +34,7 @@ class RobotList extends Component {
 						<Robot item={e} key={i} />
 					)
 				}
+				<RobotForm onAdd={this.addRobot} />
 			</div>
 		)
 	}

@@ -70,7 +70,7 @@ describe('authors', () => {
 					should.exist(res.body)
 					console.warn(res.body)
 					res.body.should.be.a('array')
-					res.body.should.not.deep.include({id: 8, name : 'name 7', email : 'name7@nowhere.com', address : 'some address on 7th street', age : 37})
+					res.body.should.not.deep.include({id: 7, name : 'name 7', email : 'name7@nowhere.com', address : 'some address on 7th street', age : 37})
 					done()
 				})
 		})		

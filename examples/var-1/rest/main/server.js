@@ -4,8 +4,8 @@ const Sequelize = require('sequelize')
 
 const mysql = require('mysql2/promise')
 
-const DB_USERNAME = 'root'
-const DB_PASSWORD = 'welcome12#'
+const DB_USERNAME = 'ramonabarbarasa'
+const DB_PASSWORD = 'ramonaM'
 
 mysql.createConnection({
 	user : DB_USERNAME,
@@ -88,6 +88,24 @@ app.put('/authors/:id', async (req, res) => {
 	// adăugați o metoda pentru modificarea autorului
 	// un autor inexistent nu poate fi modificat
 	// numai câmpurile care sunt definite in request trebuie actualizate
+	
+	try{
+		let author = await Author.findById(req.params.id);
+		if(!author){
+			res.status(404).send({message:'not found'});
+		}
+		else{
+			author.name = req.body.name || author.name;
+			author.email = req.body.email || author.email;
+			author.address = req.body.name || author.address;
+			author.age = req.body.age || author.age;
+			
+			await author.save();
+			res.status(202).send({message:'accepted'})
+		}
+	}catch(err){
+		res.status(500).send({message:'server error'})
+	}
 
 	// TODO: implement the function
 	// add the method to modify an author
@@ -99,6 +117,21 @@ app.delete('/authors/:id', async (req, res) => {
 	// TODO: implementați funcția
 	// adaugați o funcție pentru ștergerea unui autor
 	// un autor inexistent nu poate fi șters
+	
+	try{
+			let author = await Author.findById(req.params.id);
+			if(!author){
+				throw new Error('not found');
+			}
+			else{
+				await author.destroy();
+			    res.status(202).json({message : 'accepted'})
+			}
+	}catch(err){
+		res.status(500).send({message:'server error'})	
+	}
+
+	
 
 	// TODO: implement the function
 	// add the function to delete an author

@@ -16,6 +16,11 @@ class Widget {
 
 	// TODO: completați implementarea
 	// TODO: finish the implementation
+	
+	constructor(name,size){
+		this.name=name;
+		this.size=size;
+	}
 
 	getDescription(){
 		return `a ${this.name} of size ${this.size}`
@@ -25,6 +30,14 @@ class Widget {
 function decorate(){
 	//TODO: implementați funcția
 	// TODO: implement the function
+	Widget.prototype.enhance = function(n){
+		if(typeof n ==='number'){
+			this.size+=n;
+		}
+		else{
+			throw new Error("InvalidType");
+		}
+	}
 }
 
 

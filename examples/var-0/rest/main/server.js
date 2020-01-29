@@ -4,8 +4,8 @@ const Sequelize = require('sequelize')
 
 const mysql = require('mysql2/promise')
 
-const DB_USERNAME = 'root'
-const DB_PASSWORD = 'p@ss'
+const DB_USERNAME = 'ramonabarbarasa'
+const DB_PASSWORD = 'ramonaM'
 
 mysql.createConnection({
 	user : DB_USERNAME,
@@ -24,14 +24,22 @@ const sequelize = new Sequelize('tw_exam', DB_USERNAME, DB_PASSWORD,{
 	logging: false
 })
 
-// let Author = sequelize.define('author', {
-// 	name : Sequelize.STRING,
-// 	email : Sequelize.STRING,
-// 	address : Sequelize.STRING,
-// 	age : Sequelize.INTEGER
-// }, {
-//	timestamps: false
-// })
+let Author = sequelize.define('author', {
+	name :{
+		type: Sequelize.STRING,
+		allowNull:false
+	} ,
+	email :{
+		type:Sequelize.STRING,
+		allowNull:false,
+		validate:{
+			isEmail:true}
+	} ,
+	address : Sequelize.STRING,
+	age : Sequelize.INTEGER
+}, {
+	timestamps: false
+})
 
 const app = express()
 app.use(bodyParser.json())
@@ -73,6 +81,18 @@ app.post('/authors', async (req, res) => {
 	// numele și email-ul autorului nu pot fi vide
 	// adresele autorilor pot fi vide
 	// email-urile autorilor trebuie validate ca formă
+	
+	try{
+		const result = await Author.create(req.body);
+		if(result){
+			res.status(201).send({message:'created'});
+		}
+		
+	}catch(err){
+		res.status(500).send({message:'server error'})
+	}
+	
+	
 
 	// TODO: implement the endpoint
 	// should add an author

@@ -13,7 +13,26 @@
 
 function distance(first, second){
 	//TODO: implementați funcția
-	// TODO: implement the function
+	if(!Array.isArray(first) || !Array.isArray(second)){
+		throw new Error("InvalidType")
+	}
+
+	const uniqueFirst = Array.from(new Set(first));
+	const uniqueSecond = Array.from(new Set(second));
+	
+	let diff=0;
+	for(const [element,index] of uniqueFirst){
+		if(uniqueSecond.indexOf(element)===-1){
+			diff++;
+		}
+		else{
+			uniqueSecond.splice(index,1);
+		}
+	}
+	
+	diff+=uniqueSecond.length;
+	
+	return diff;
 }
 
 

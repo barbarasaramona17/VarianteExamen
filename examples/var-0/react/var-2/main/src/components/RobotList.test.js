@@ -7,51 +7,23 @@ import Adapter from 'enzyme-adapter-react-16'
 
 configure({ adapter: new Adapter() })
 
-it ('renders a list of robots with edit buttons', () => {
-	const component = mount(<RobotList />)
-	let robot = component.find(Robot).first()
-	let button = robot.find('[value="edit"]').first()
-	expect(button.length).toEqual(1)	
+it ('renders a list of robots', () => {
+	const component = shallow(<RobotList />)
+	expect(component.find(Robot).length).toEqual(2)	
 })
 
-it ('goes to edit mode upon clicking', () => {
+it ('valid props on robot', () => {
 	const component = mount(<RobotList />)
-	let robot = component.find(Robot).first()
-	let button = robot.find('[value="edit"]').first()
-	button.simulate('click')
-	let inputs = component.find('[type="text"]')
-	expect(inputs.length).toEqual(3)	
+	let firstRobot = component.find(Robot).first()
+	expect(firstRobot.props().item).toEqual({"id": 1, "mass": 1000, "name": "tim", "type": "worker"})
+	expect(typeof firstRobot.props().onDelete).toEqual('function')
 })
 
-it ('can return to view mode', () => {
+it ('delete a robot', () => {
 	const component = mount(<RobotList />)
-	let robot = component.find(Robot).first()
-	let button = robot.find('[value="edit"]').first()
+	let firstRobot = component.find(Robot).first()
+	let button = firstRobot.find('[value="delete"]').first()
 	button.simulate('click')
-	button = component.find('[value="cancel"]').first()
-	button.simulate('click')	
-	let inputs = component.find('[type="text"]')
-	expect(inputs.length).toEqual(0)	
+	expect(component.find(Robot).length).toEqual(1)	
 })
-
-it ('can save a robot', () => {
-	const component = mount(<RobotList />)
-	let robot = component.find(Robot).first()
-	let button = robot.find('[value="edit"]').first()
-	button.simulate('click')
-	let nameInput = component.find('#name').first()
-	nameInput.simulate('focus')
-	nameInput.simulate('change', { target: { name : 'name', value: 'test_name' } })
-	let typeInput = component.find('#type').first()
-	typeInput.simulate('focus')
-	typeInput.simulate('change', { target: {name : 'type', value: 'test_type' } })
-	let massInput = component.find('#mass').first()
-	massInput.simulate('focus')
-	massInput.simulate('change', { target: { name : 'mass', value: 'test_mass' } })
-	button = component.find('[value="save"]').first()
-	button.simulate('click')
-	robot = component.find(Robot).first()
-	expect(robot.props().item).toEqual({id: 1, name : 'test_name', type : 'test_type', mass: 'test_mass'})	
-})
-
 

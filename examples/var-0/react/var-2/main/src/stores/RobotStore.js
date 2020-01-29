@@ -22,10 +22,10 @@ class RobotStore{
 	getRobots(){
 		return this.robots
 	}
-	saveRobot(id, robot){
+	deleteRobot(id){
 		let index = this.robots.findIndex((e) => e.id === id)
 		if (index !== -1){
-			Object.assign(this.robots[index],robot) 
+			this.robots.splice(index, 1)
 		}
 		this.emitter.emit('UPDATE')
 	}
